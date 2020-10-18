@@ -30,3 +30,4 @@
 # Issues
 
 - The insert() method is not implemented.
+- Equality is not implemented.

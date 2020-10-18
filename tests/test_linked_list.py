@@ -1,21 +1,21 @@
+import pytest
+
 from linked_list.linked_list import LinkedList
 
 
 def test_linked_list_length():
     """Verify list if list returns its length properly."""
 
-    linked_list_ins = LinkedList()
+    linked_list_empty = LinkedList()
+    assert linked_list_empty.length == 0
 
-    assert linked_list_ins.length == 0
+    input_list = [1, 2, 3, 4]
+    linked_list_not_empty = LinkedList(input_list)
+    assert len(linked_list_not_empty) == len(input_list)
 
-    element_ins1 = 2
-    element_ins2 = 3
-    element_ins3 = 4
-    linked_list_ins.append(element_ins1)
-    linked_list_ins.append(element_ins2)
-    linked_list_ins.append(element_ins3)
-
-    assert linked_list_ins.length == 3
+    linked_list_not_empty.append(5)
+    expected_list_size = 5
+    assert len(linked_list_not_empty) == expected_list_size
 
 
 def test_linked_list_refs():
@@ -61,15 +61,45 @@ def test_linked_list_init():
 
 
 def test_linked_list_get_index():
-    linked_list = LinkedList([1, 2, 3, 4, 5])
 
-    assert linked_list[2] == 3
+    input_list = [1, 2, 3, 4, 5]
+    linked_list = LinkedList(input_list)
+
+    min_index = 0
+    max_index = len(input_list) - 1
+    under_min_index = min_index - 1
+    over_max_index = len(input_list)
+
+    assert linked_list[min_index] == input_list[0]
+    assert linked_list[max_index] == input_list[-1]
+
+    with pytest.raises(IndexError):
+        linked_list[under_min_index]
+
+    with pytest.raises(IndexError):
+        linked_list[over_max_index]
 
 
 def test_linked_list_set_index():
-    linked_list = LinkedList([1, 2, 3])
-    linked_list[2] = 1000
+    init_list = [1, 2, 3]
+    linked_list = LinkedList(init_list)
 
-    assert linked_list[0] == 1
-    assert linked_list[1] == 2
-    assert linked_list[2] == 1000
+    min_index = 0
+    max_index = len(init_list) - 1
+    under_min_index = min_index - 1
+    over_max_index = max_index + 1
+
+    min_index_new_value = 1000
+    max_index_new_value = 2000
+
+    linked_list[min_index] = min_index_new_value
+    linked_list[max_index] = max_index_new_value
+
+    assert linked_list[min_index] == min_index_new_value
+    assert linked_list[max_index] == max_index_new_value
+
+    with pytest.raises(IndexError):
+        linked_list[under_min_index] == 0
+
+    with pytest.raises(IndexError):
+        linked_list[over_max_index] == 0

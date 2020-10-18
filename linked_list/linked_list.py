@@ -63,12 +63,24 @@ class LinkedList:
         return current.data
 
     def __getitem__(self, index):
+        if index < 0:
+            raise IndexError('Index of LinkedList shall be 0 or any positive value.')
+        elif index > len(self):
+            raise IndexError('Index out of bounds')
+
         element = LinkedList._find_index(index, self.first_element)
         return element.data
 
     def __setitem__(self, index, value):
+        if index < 0:
+            raise IndexError('Index of LinkedList shall be 0 or any positive value.')
+        elif index > len(self):
+            raise IndexError('Index out of bounds')
+
         element = LinkedList._find_index(index, self.first_element)
         element.data = value
 
     def __len__(self):
         return self.length
+
+
